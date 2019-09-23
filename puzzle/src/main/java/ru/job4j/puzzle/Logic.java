@@ -72,26 +72,20 @@ public class Logic {
         int[][] table = this.convert();
         boolean result = false;
         int sum;
-//  Проверка для горизонтального случая
+
         for (int row = 0; row != table.length; row++) {
-            sum = 0;
-            for (int cell = 0; cell != table.length; cell++) {
-//  Получим сумму ряда
-                sum += table[row][cell];
-            }
-//  Если сумма равна 5, значит ряд полностью заполнен
-            if (sum == table.length) {
-                result = true;
-                break;
-            }
-        }
-//   Если проверка горизонтальная отрицательная, тогда проверим вертикальную
-        if (!result) {
-            for (int cell = 0; cell != table.length; cell++) {
+            if (table[row][row] == 1) {
                 sum = 0;
-                for (int row = 0; row != table.length; row++) {
-//  Получим сумму колонки
-                    sum += table[row][cell];
+                for (int i = 0; i != table.length; i++) {
+                    sum += table[row][i];
+                }
+                if (sum == table.length) {
+                    result = true;
+                    break;
+                }
+                sum = 0;
+                for (int i = 0; i != table.length; i++) {
+                    sum += table[i][row];
                 }
                 if (sum == table.length) {
                     result = true;
