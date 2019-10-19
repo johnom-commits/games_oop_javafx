@@ -23,12 +23,26 @@ public class Logic {
 
     public boolean move(Cell source, Cell dest) {
         boolean rst = false;
+        boolean obstacle = false;
         int index = this.findBy(source);
         if (index != -1) {
-            Cell[] steps = this.figures[index].way(source, dest);
-            if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
+            try {
+                Cell[] steps = this.figures[index].way(source, dest);
+
+            for (Cell cell : steps) {
+                if (this.findBy(cell) >= 0) {
+                    obstacle = true;
+                    System.out.println("На пути другая фигура");
+                    break;
+                }
+            }
+
+            if (!obstacle && steps.length > 0 && steps[steps.length - 1].equals(dest)) {
                 rst = true;
                 this.figures[index] = this.figures[index].copy(dest);
+            }
+            } catch (IllegalStateException e) {
+                System.out.println("Слон может ходить только по диагонали.");
             }
         }
         return rst;
